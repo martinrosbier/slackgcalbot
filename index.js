@@ -4,8 +4,9 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const gAPI = require("./GoogleAPI");
-const slackConf = require("./SlackConf");
+const gAPI = require("./src/GoogleAPI");
+const Payloads = require("./src/Payloads");
+const slackConf = require("./src/SlackConf");
 
 const bot = new SlackBot({
 	token: `${process.env.BOT_TOKEN}`,
@@ -23,5 +24,5 @@ bot.on("message", (data) => {
 	if (data.type !== "message") {
 		return;
 	}
-	handleMessage(data.text);
+	slackConf.handleMessage(data.text);
 });
