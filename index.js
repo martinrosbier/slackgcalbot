@@ -1,28 +1,13 @@
-const SlackBot = require("slackbots");
-const axios = require("axios");
-const dotenv = require("dotenv");
+const express = require("express");
+const bodyParser = require("body-parser");
 
-dotenv.config();
+const port = process.env.PORT || 3000;
+const app = express();
 
-const gAPI = require("./src/GoogleAPI");
-const Payloads = require("./src/Payloads");
-const slackConf = require("./src/SlackConf");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-const bot = new SlackBot({
-	token: `${process.env.BOT_TOKEN}`,
-	name: "test",
-});
-
-bot.on("error", (err) => {
-	console.log(err);
-});
-
-bot.on("start", () => {});
-
-// Message Handler
-bot.on("message", (data) => {
-	if (data.type !== "message") {
-		return;
-	}
-	slackConf.handleMessage(data.text);
+// Starts server
+app.listen(port, function () {
+	console.log("Bot is listening on port " + port);
 });
